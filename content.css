@@ -1,4 +1,4 @@
-.wa-ad-guard-badge {
+.watag-badge {
   position: absolute;
   right: 8px;
   bottom: 6px;
@@ -13,7 +13,7 @@
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
 }
 
-.wa-ad-guard-label {
+.watag-label {
   color: #f2a84e;
   font-size: 10px;
   font-weight: 600;
@@ -23,11 +23,11 @@
   align-items: center;
 }
 
-.wa-ad-guard-label svg {
+.watag-label svg {
   display: block;
 }
 
-.wa-ad-guard-btn {
+.watag-btn {
   border: none;
   border-radius: 5px;
   padding: 3px 7px;
@@ -37,44 +37,44 @@
   line-height: 1.4;
 }
 
-.wa-ad-guard-btn--archive,
-.wa-ad-guard-btn--dismiss {
+.watag-btn--archive,
+.watag-btn--dismiss {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   padding: 4px;
 }
 
-.wa-ad-guard-btn--archive svg,
-.wa-ad-guard-btn--dismiss svg {
+.watag-btn--archive svg,
+.watag-btn--dismiss svg {
   display: block;
 }
 
-.wa-ad-guard-btn:disabled {
+.watag-btn:disabled {
   opacity: 0.5;
   cursor: default;
 }
 
-.wa-ad-guard-btn--archive {
+.watag-btn--archive {
   background: #2f8f7a;
   color: #ffffff;
 }
 
-.wa-ad-guard-btn--unfollow {
+.watag-btn--unfollow {
   background: #e05a4a;
   color: #ffffff;
 }
 
-.wa-ad-guard-btn--dismiss {
+.watag-btn--dismiss {
   background: transparent;
   color: #9aa5a8;
 }
 
-.wa-ad-guard-btn--dismiss:hover {
+.watag-btn--dismiss:hover {
   color: #d7dcdd;
 }
 
-#wa-ad-guard-toast {
+#watag-toast {
   position: fixed;
   left: 50%;
   bottom: 28px;
@@ -93,10 +93,10 @@
   text-align: center;
 }
 
-.wa-ad-guard-toast--ok {
+.watag-toast--ok {
   background: #2f8f7a;
 }
 
-.wa-ad-guard-toast--warn {
+.watag-toast--warn {
   background: #b8752f;
 }

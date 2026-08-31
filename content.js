@@ -1,4 +1,4 @@
-// WA Ad Guard — content script for web.whatsapp.com
+// WATag — content script for web.whatsapp.com
 // Flags likely-promotional chats/channels in the chat list and injects
 // one-click Archive / Unfollow controls.
 //
@@ -51,7 +51,7 @@
       STATE.keywords = (data.keywords || []).map((k) => k.toLowerCase());
       STATE.whitelist = data.whitelist || [];
       STATE.settingsLoaded = true;
-      console.log("[WA Ad Guard] settings loaded — enabled:", STATE.enabled, "keywords:", STATE.keywords);
+      console.log("[WATag] settings loaded — enabled:", STATE.enabled, "keywords:", STATE.keywords);
       rescan();
     });
   }
@@ -62,7 +62,7 @@
     if (changes.whitelist) STATE.whitelist = changes.whitelist.newValue || [];
     // Settings changed the classification rules — re-evaluate every row.
     STATE.processed = new WeakSet();
-    document.querySelectorAll(".wa-ad-guard-badge").forEach((b) => b.remove());
+    document.querySelectorAll(".watag-badge").forEach((b) => b.remove());
     rescan();
   });
 
@@ -166,14 +166,14 @@
   }
 
   function showToast(message, tone = "ok") {
-    let toast = document.getElementById("wa-ad-guard-toast");
+    let toast = document.getElementById("watag-toast");
     if (!toast) {
       toast = document.createElement("div");
-      toast.id = "wa-ad-guard-toast";
+      toast.id = "watag-toast";
       document.body.appendChild(toast);
     }
     toast.textContent = message;
-    toast.className = `wa-ad-guard-toast wa-ad-guard-toast--${tone}`;
+    toast.className = `watag-toast watag-toast--${tone}`;
     toast.style.opacity = "1";
     clearTimeout(toast._hideTimer);
     toast._hideTimer = setTimeout(() => {
@@ -184,7 +184,7 @@
   async function handleAction(row, badge, action, statKey) {
     badge.querySelectorAll("button").forEach((b) => (b.disabled = true));
     const result = await performAction(row, action);
-    console.log(`[WA Ad Guard] ${action} result:`, result);
+    console.log(`[WATag] ${action} result:`, result);
     if (result.ok) {
       bumpStat(statKey);
       showToast(`Done — ${action === "unfollow" ? "unfollowed" : action + "d"}. This will sync to your phone.`, "ok");
@@ -201,16 +201,16 @@
   }
 
   function injectBadge(row, info) {
-    if (row.querySelector(".wa-ad-guard-badge")) return;
+    if (row.querySelector(".watag-badge")) return;
 
     const key = getRowKey(row);
     const badge = document.createElement("div");
-    badge.className = "wa-ad-guard-badge";
+    badge.className = "watag-badge";
     badge.title = `Flagged: ${info.reason}`;
 
     if (info.kind === "channel") {
       const label = document.createElement("span");
-      label.className = "wa-ad-guard-label";
+      label.className = "watag-label";
       label.textContent = "Sponsored";
       badge.appendChild(label);
     }
@@ -219,7 +219,7 @@
     archiveBtn.innerHTML = ICONS.archive;
     archiveBtn.title = "Archive";
     archiveBtn.setAttribute("aria-label", "Archive");
-    archiveBtn.className = "wa-ad-guard-btn wa-ad-guard-btn--archive";
+    archiveBtn.className = "watag-btn watag-btn--archive";
     archiveBtn.addEventListener("click", (e) => {
       e.stopPropagation();
       e.preventDefault();
@@ -230,7 +230,7 @@
     if (info.kind === "channel") {
       const unfollowBtn = document.createElement("button");
       unfollowBtn.textContent = "Unfollow";
-      unfollowBtn.className = "wa-ad-guard-btn wa-ad-guard-btn--unfollow";
+      unfollowBtn.className = "watag-btn watag-btn--unfollow";
       unfollowBtn.addEventListener("click", (e) => {
         e.stopPropagation();
         e.preventDefault();
@@ -243,7 +243,7 @@
     dismissBtn.innerHTML = ICONS.notAnAd;
     dismissBtn.title = "Not an ad";
     dismissBtn.setAttribute("aria-label", "Not an ad");
-    dismissBtn.className = "wa-ad-guard-btn wa-ad-guard-btn--dismiss";
+    dismissBtn.className = "watag-btn watag-btn--dismiss";
     dismissBtn.addEventListener("click", (e) => {
       e.stopPropagation();
       e.preventDefault();
@@ -269,8 +269,8 @@
       return;
     }
     if (!STATE.enabled) {
-      console.log("[WA Ad Guard] disabled — skipping scan");
-      document.querySelectorAll(".wa-ad-guard-badge").forEach((b) => b.remove());
+      console.log("[WATag] disabled — skipping scan");
+      document.querySelectorAll(".watag-badge").forEach((b) => b.remove());
       return;
     }
     const rows = findChatRows();
@@ -288,11 +288,11 @@
         }
       } catch (err) {
         errorCount++;
-        console.error("[WA Ad Guard] error processing a row:", err);
+        console.error("[WATag] error processing a row:", err);
       }
       STATE.processed.add(row);
     }
-    console.log(`[WA Ad Guard] scan complete — rows seen: ${rows.length}, newly flagged: ${flaggedCount}, errors: ${errorCount}`);
+    console.log(`[WATag] scan complete — rows seen: ${rows.length}, newly flagged: ${flaggedCount}, errors: ${errorCount}`);
   }
 
   const observer = new MutationObserver(() => {

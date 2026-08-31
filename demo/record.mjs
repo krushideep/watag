@@ -1,4 +1,4 @@
-// Records a demo of WA Ad Guard running against demo/mock-whatsapp.html.
+// Records a demo of WATag running against demo/mock-whatsapp.html.
 //
 // The real manifest.json only matches https://web.whatsapp.com/*, so it
 // won't run on a local test page. Rather than touch the source manifest,
@@ -85,7 +85,7 @@ const page = await context.newPage();
 await page.goto(`${demoOrigin}/mock-whatsapp.html`);
 await pause(page, 1500); // let the content script's initial scan + badge injection settle
 
-let badgeCount = await page.locator(".wa-ad-guard-badge").count();
+let badgeCount = await page.locator(".watag-badge").count();
 console.log("Flagged rows:", badgeCount);
 if (badgeCount === 0) throw new Error("No rows were flagged — extension did not activate on the mock page.");
 
@@ -94,19 +94,19 @@ await pause(page, 700);
 // 1. Hover a flagged promotional chat, then Archive it.
 let row = await hoverRow(page, "SBI Alerts");
 await pause(page, 900);
-await row.locator(".wa-ad-guard-btn--archive").click();
+await row.locator(".watag-btn--archive").click();
 await pause(page, 2000); // toast + row fade-out
 
 // 2. Hover a Sponsored channel, then Unfollow it.
 row = await hoverRow(page, "Zomato Offers");
 await pause(page, 800);
-await row.locator(".wa-ad-guard-btn--unfollow").click();
+await row.locator(".watag-btn--unfollow").click();
 await pause(page, 2000);
 
 // 3. Hover another flagged chat and dismiss it as "Not an ad" (whitelist flow).
 row = await hoverRow(page, "MyntraDeals");
 await pause(page, 800);
-await row.locator(".wa-ad-guard-btn--dismiss").click();
+await row.locator(".watag-btn--dismiss").click();
 await pause(page, 1200);
 
 await pause(page, 800);

@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "WA Ad Guard — one-click archive/unfollow for WhatsApp Web",
+  "name": "WATag — one-click archive/unfollow for WhatsApp Web",
   "version": "1.0.0",
   "description": "Flags sponsored channels and promotional chats on WhatsApp Web, with one-click Archive or Unfollow. Changes sync to your phone automatically.",
   "permissions": ["storage"],

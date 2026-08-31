@@ -1,4 +1,4 @@
-# WA Ad Guard
+# WATag
 
 A browser extension for **web.whatsapp.com** (desktop Chrome, Edge, or Brave)
 that flags promotional content and gives you one-click **Archive** and
@@ -28,7 +28,7 @@ interactions for real, not staged.
    the browser loads the extension from this folder each time).
 2. Open `chrome://extensions` (or `edge://extensions`, or `brave://extensions`).
 3. Turn on **Developer mode** (top-right toggle).
-4. Click **Load unpacked** and select the `wa-ad-guard` folder.
+4. Click **Load unpacked** and select the `watag` folder.
 5. Open web.whatsapp.com and log in as usual.
 
 You'll see small badges appear under flagged chats with icon buttons for

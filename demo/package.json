@@ -1,8 +1,8 @@
 {
-  "name": "wa-ad-guard-demo",
+  "name": "watag-demo",
   "version": "1.0.0",
   "private": true,
-  "description": "Records a demo of WA Ad Guard against a mock WhatsApp Web page.",
+  "description": "Records a demo of WATag against a mock WhatsApp Web page.",
   "scripts": {
     "record": "node record.mjs"
   },

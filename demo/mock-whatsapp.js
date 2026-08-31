@@ -1,5 +1,5 @@
 // Minimal mock of WhatsApp Web's row context menu, just enough for
-// WA Ad Guard's content.js to find and click a real "Archive"/"Unfollow"
+// WATag's content.js to find and click a real "Archive"/"Unfollow"
 // menu item via the same selectors it uses on the live site.
 (function () {
   const menuLayer = document.getElementById("menuLayer");
