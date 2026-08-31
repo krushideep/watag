@@ -16,9 +16,9 @@
     // Archive: solid box with a rounded lid and a download-arrow cutout.
     archive:
       '<svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path fill-rule="evenodd" d="M3 3h18v4H3zM4 9h16v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9zM11 11h2v4h3l-4 4-4-4h3z"></path></svg>',
-    // "Untag": solid price-tag shape with a diagonal cutout slash.
+    // "Untag": solid price-tag shape (with its punch-hole) and a diagonal cutout slash.
     notAnAd:
-      '<svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path fill-rule="evenodd" d="M21.41 11.41L12.59 2.59A2 2 0 0 0 11.17 2H4a2 2 0 0 0-2 2v7.17a2 2 0 0 0 .59 1.42l8.82 8.82a2 2 0 0 0 2.83 0l7.17-7.17a2 2 0 0 0 0-2.83zM1 21L3 23L23 3L21 1Z"></path></svg>',
+      '<svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path fill-rule="evenodd" d="M21.41 11.41L12.59 2.59A2 2 0 0 0 11.17 2H4a2 2 0 0 0-2 2v7.17a2 2 0 0 0 .59 1.42l8.82 8.82a2 2 0 0 0 2.83 0l7.17-7.17a2 2 0 0 0 0-2.83zM6.5 8C5.67 8 5 7.33 5 6.5S5.67 5 6.5 5 8 5.67 8 6.5 7.33 8 6.5 8zM1 21L3 23L23 3L21 1Z"></path></svg>',
   };
 
   const STATE = {

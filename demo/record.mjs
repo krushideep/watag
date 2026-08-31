@@ -60,11 +60,63 @@ function pause(page, ms) {
   return page.waitForTimeout(ms);
 }
 
-async function hoverRow(page, name) {
-  const row = page.locator(`.chat-row:has(span[title="${name}"])`);
-  await row.scrollIntoViewIfNeeded();
-  await row.hover();
-  return row;
+// Playwright's synthetic mouse events don't draw an OS cursor, so a
+// hover/click shows up in the recording as an instant state change with
+// no visible pointer. This injects a fake cursor dot that tracks real
+// 'mousemove' events, and drives page.mouse in small interpolated steps
+// (with a real delay between them) so its motion is visible on video.
+async function attachCursor(page) {
+  await page.evaluate(() => {
+    const cursor = document.createElement("div");
+    cursor.id = "__demoCursor";
+    Object.assign(cursor.style, {
+      position: "fixed",
+      left: "0px",
+      top: "0px",
+      width: "18px",
+      height: "18px",
+      marginLeft: "-9px",
+      marginTop: "-9px",
+      borderRadius: "50%",
+      background: "rgba(255,255,255,0.9)",
+      border: "2px solid rgba(0,0,0,0.65)",
+      boxShadow: "0 1px 4px rgba(0,0,0,0.5)",
+      zIndex: 999999,
+      pointerEvents: "none",
+      transition: "transform 0.08s ease",
+    });
+    document.body.appendChild(cursor);
+    window.addEventListener("mousemove", (e) => {
+      cursor.style.left = `${e.clientX}px`;
+      cursor.style.top = `${e.clientY}px`;
+    }, true);
+    window.addEventListener("mousedown", () => { cursor.style.transform = "scale(0.7)"; }, true);
+    window.addEventListener("mouseup", () => { cursor.style.transform = "scale(1)"; }, true);
+  });
+
+  let pos = { x: 20, y: 20 };
+  return {
+    async moveTo(x, y, { duration = 450, steps = 24 } = {}) {
+      const { x: startX, y: startY } = pos;
+      for (let i = 1; i <= steps; i++) {
+        const t = i / steps;
+        await page.mouse.move(startX + (x - startX) * t, startY + (y - startY) * t);
+        await page.waitForTimeout(duration / steps);
+      }
+      pos = { x, y };
+    },
+    async click(x, y) {
+      await this.moveTo(x, y);
+      await page.mouse.down();
+      await page.waitForTimeout(90);
+      await page.mouse.up();
+    },
+  };
+}
+
+async function centerOf(locator) {
+  const box = await locator.boundingBox();
+  return { x: box.x + box.width / 2, y: box.y + box.height / 2 };
 }
 
 const context = await chromium.launchPersistentContext(userDataDir, {
@@ -83,6 +135,7 @@ const extensionId = new URL(sw.url()).host;
 
 const page = await context.newPage();
 await page.goto(`${demoOrigin}/mock-whatsapp.html`);
+const cursor = await attachCursor(page);
 await pause(page, 1500); // let the content script's initial scan + badge injection settle
 
 let badgeCount = await page.locator(".watag-badge").count();
@@ -91,22 +144,36 @@ if (badgeCount === 0) throw new Error("No rows were flagged — extension did no
 
 await pause(page, 700);
 
+async function hoverRow(name) {
+  const row = page.locator(`.chat-row:has(span[title="${name}"])`);
+  await row.scrollIntoViewIfNeeded();
+  const { x, y } = await centerOf(row);
+  await cursor.moveTo(x, y);
+  return row;
+}
+
+async function clickButton(row, selector) {
+  const btn = row.locator(selector);
+  const { x, y } = await centerOf(btn);
+  await cursor.click(x, y);
+}
+
 // 1. Hover a flagged promotional chat, then Archive it.
-let row = await hoverRow(page, "SBI Alerts");
+let row = await hoverRow("SBI Alerts");
 await pause(page, 900);
-await row.locator(".watag-btn--archive").click();
+await clickButton(row, ".watag-btn--archive");
 await pause(page, 2000); // toast + row fade-out
 
-// 2. Hover a Sponsored channel, then Unfollow it.
-row = await hoverRow(page, "Zomato Offers");
+// 2. Hover another flagged promotional chat, then Archive it too.
+row = await hoverRow("Zomato Offers");
 await pause(page, 800);
-await row.locator(".watag-btn--unfollow").click();
+await clickButton(row, ".watag-btn--archive");
 await pause(page, 2000);
 
 // 3. Hover another flagged chat and dismiss it as "Not an ad" (whitelist flow).
-row = await hoverRow(page, "MyntraDeals");
+row = await hoverRow("MyntraDeals");
 await pause(page, 800);
-await row.locator(".watag-btn--dismiss").click();
+await clickButton(row, ".watag-btn--dismiss");
 await pause(page, 1200);
 
 await pause(page, 800);
@@ -116,10 +183,18 @@ await page.close();
 const popupPage = await context.newPage();
 await popupPage.setViewportSize({ width: 340, height: 520 });
 await popupPage.goto(`chrome-extension://${extensionId}/popup.html`);
+const popupCursor = await attachCursor(popupPage);
 await pause(popupPage, 1000);
-await popupPage.locator("#keywordInput").fill("subscribe now");
+
+const keywordInput = popupPage.locator("#keywordInput");
+const inputPos = await centerOf(keywordInput);
+await popupCursor.moveTo(inputPos.x, inputPos.y);
+await keywordInput.click();
+await keywordInput.fill("subscribe now");
 await pause(popupPage, 400);
-await popupPage.locator("#keywordAdd").click();
+
+const addBtnPos = await centerOf(popupPage.locator("#keywordAdd"));
+await popupCursor.click(addBtnPos.x, addBtnPos.y);
 await pause(popupPage, 1400);
 await popupPage.close();
 

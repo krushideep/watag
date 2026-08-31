@@ -16,7 +16,7 @@ on iPhone or Android.
 
 ## Demo
 
-![Demo: flagging and archiving promotional chats, unfollowing a sponsored channel, and dismissing a false positive](demo/demo.gif)
+![Demo: flagging and archiving promotional chats, and dismissing a false positive](demo/demo.gif)
 
 Recorded against a local mock chat list with realistic sample data (see
 [`demo/`](demo)) — the extension itself is unmodified and driving the
