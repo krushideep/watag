@@ -5,7 +5,6 @@ const keywordAdd = document.getElementById("keywordAdd");
 const whitelistTags = document.getElementById("whitelistTags");
 const whitelistEmpty = document.getElementById("whitelistEmpty");
 const statArchived = document.getElementById("statArchived");
-const statUnfollowed = document.getElementById("statUnfollowed");
 
 function renderTags(container, items, onRemove) {
   container.innerHTML = "";
@@ -40,9 +39,8 @@ function refresh() {
       chrome.storage.local.set({ whitelist: next }, refresh);
     });
 
-    const stats = data.stats || { archived: 0, unfollowed: 0 };
+    const stats = data.stats || { archived: 0 };
     statArchived.textContent = stats.archived || 0;
-    statUnfollowed.textContent = stats.unfollowed || 0;
   });
 }
 

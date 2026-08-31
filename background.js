@@ -6,7 +6,7 @@ const DEFAULTS = {
     "order now", "click here", "cashback", "coupon", "clearance"
   ],
   whitelist: [],
-  stats: { archived: 0, unfollowed: 0 }
+  stats: { archived: 0 }
 };
 
 chrome.runtime.onInstalled.addListener(async () => {

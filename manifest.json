@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "WATag — one-click archive/unfollow for WhatsApp Web",
+  "name": "WATag — one-click archive for WhatsApp Web",
   "version": "1.0.0",
-  "description": "Flags sponsored channels and promotional chats on WhatsApp Web, with one-click Archive or Unfollow. Changes sync to your phone automatically.",
+  "description": "Flags promotional chats on WhatsApp Web, with one-click Archive. Changes sync to your phone automatically.",
   "permissions": ["storage"],
   "host_permissions": ["https://web.whatsapp.com/*"],
   "content_scripts": [

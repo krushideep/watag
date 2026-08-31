@@ -1,6 +1,6 @@
 // WATag — content script for web.whatsapp.com
-// Flags likely-promotional chats/channels in the chat list and injects
-// one-click Archive / Unfollow controls.
+// Flags likely-promotional chats in the chat list and injects a one-click
+// Archive control.
 //
 // WhatsApp Web's DOM uses obfuscated, frequently-changing class names, so
 // this script deliberately avoids relying on them. It matches on stable
@@ -28,8 +28,6 @@
     processed: new WeakSet(),
     settingsLoaded: false,
   };
-
-  const SPONSORED_MARKERS = ["Sponsored", "sponsored"];
 
   function sleep(ms) {
     return new Promise((r) => setTimeout(r, ms));
@@ -81,12 +79,9 @@
 
   function classify(row) {
     const text = row.innerText || "";
-    const isSponsoredChannel = SPONSORED_MARKERS.some((m) => text.includes(m));
-    if (isSponsoredChannel) return { flagged: true, kind: "channel", reason: "Sponsored" };
-
     const lower = text.toLowerCase();
     const hit = STATE.keywords.find((kw) => kw && lower.includes(kw));
-    if (hit) return { flagged: true, kind: "chat", reason: hit };
+    if (hit) return { flagged: true, reason: hit };
 
     return { flagged: false };
   }
@@ -150,15 +145,11 @@
     return menu;
   }
 
-  async function performAction(row, action) {
+  async function performArchive(row) {
     const menu = await openContextMenu(row);
     if (!menu) return { ok: false, stage: "menu-open" };
 
-    const labelMap = {
-      archive: ["archive"],
-      unfollow: ["unfollow"],
-    };
-    const target = findMenuItemByText(menu, labelMap[action]);
+    const target = findMenuItemByText(menu, ["archive"]);
     if (!target) return { ok: false, stage: "menu-item", menu };
     target.click();
 
@@ -181,13 +172,13 @@
     }, 3200);
   }
 
-  async function handleAction(row, badge, action, statKey) {
+  async function handleArchive(row, badge) {
     badge.querySelectorAll("button").forEach((b) => (b.disabled = true));
-    const result = await performAction(row, action);
-    console.log(`[WATag] ${action} result:`, result);
+    const result = await performArchive(row);
+    console.log("[WATag] archive result:", result);
     if (result.ok) {
-      bumpStat(statKey);
-      showToast(`Done — ${action === "unfollow" ? "unfollowed" : action + "d"}. This will sync to your phone.`, "ok");
+      bumpStat("archived");
+      showToast("Done — archived. This will sync to your phone.", "ok");
       badge.remove();
     } else if (result.stage === "menu-item" && result.menu) {
       // Partial automation: menu is open, highlight nothing further we can
@@ -208,13 +199,6 @@
     badge.className = "watag-badge";
     badge.title = `Flagged: ${info.reason}`;
 
-    if (info.kind === "channel") {
-      const label = document.createElement("span");
-      label.className = "watag-label";
-      label.textContent = "Sponsored";
-      badge.appendChild(label);
-    }
-
     const archiveBtn = document.createElement("button");
     archiveBtn.innerHTML = ICONS.archive;
     archiveBtn.title = "Archive";
@@ -223,21 +207,9 @@
     archiveBtn.addEventListener("click", (e) => {
       e.stopPropagation();
       e.preventDefault();
-      handleAction(row, badge, "archive", "archived");
+      handleArchive(row, badge);
     });
     badge.appendChild(archiveBtn);
-
-    if (info.kind === "channel") {
-      const unfollowBtn = document.createElement("button");
-      unfollowBtn.textContent = "Unfollow";
-      unfollowBtn.className = "watag-btn watag-btn--unfollow";
-      unfollowBtn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        e.preventDefault();
-        handleAction(row, badge, "unfollow", "unfollowed");
-      });
-      badge.appendChild(unfollowBtn);
-    }
 
     const dismissBtn = document.createElement("button");
     dismissBtn.innerHTML = ICONS.notAnAd;

@@ -1,18 +1,16 @@
 # WATag
 
 A browser extension for **web.whatsapp.com** (desktop Chrome, Edge, or Brave)
-that flags promotional content and gives you one-click **Archive** and
-**Unfollow** buttons.
+that flags promotional content and gives you a one-click **Archive** button.
 
-It works on:
-- **Sponsored Channels** — always flagged, with an **Unfollow** button.
-- **Regular chats/groups** — flagged if the message preview contains a word
-  from your keyword list (edit this from the popup — defaults include
-  "sale", "% off", "discount", "buy now", etc).
+It works on regular chats and groups: a chat is flagged if its message
+preview contains a word from your keyword list. Edit that list from the
+extension's popup — defaults include "sale", "% off", "discount", "buy now",
+etc.
 
-Any chat you archive or unfollow here syncs to your phone automatically,
-since it's the same WhatsApp account — you don't need to install anything
-on iPhone or Android.
+Any chat you archive here syncs to your phone automatically, since it's the
+same WhatsApp account — you don't need to install anything on iPhone or
+Android.
 
 ## Demo
 
@@ -24,33 +22,34 @@ interactions for real, not staged.
 
 ## Install (takes ~1 minute)
 
-1. Unzip this folder somewhere permanent (don't delete it after installing —
-   the browser loads the extension from this folder each time).
+1. Get this repo onto your machine somewhere permanent — `git clone` it, or
+   download and unzip the ZIP from GitHub (don't delete or move it after
+   installing — the browser loads the extension from this folder each time).
 2. Open `chrome://extensions` (or `edge://extensions`, or `brave://extensions`).
 3. Turn on **Developer mode** (top-right toggle).
-4. Click **Load unpacked** and select the `watag` folder.
+4. Click **Load unpacked** and select this project's folder.
 5. Open web.whatsapp.com and log in as usual.
 
 You'll see small badges appear under flagged chats with icon buttons for
-**Archive**, **Unfollow** (Sponsored Channels only), and **Not an ad**.
+**Archive** and **Not an ad**.
 
 ## Using it
 
 - Click the extension icon in your toolbar to:
   - Turn detection on/off
   - Add or remove keywords
-  - See how many chats you've archived/unfollowed
+  - See how many chats you've archived
   - Manage your "never flag" list (built automatically when you tap
     "Not an ad" on a chat)
-- Click **Archive** or **Unfollow** directly on a flagged chat to act on
-  it immediately — no need to open the chat first.
+- Click **Archive** directly on a flagged chat to act on it immediately —
+  no need to open the chat first.
 
 ## Please read: honest limitations
 
 - **WhatsApp doesn't run ads in normal chats.** This tool flags things that
-  *look* promotional (sponsored Channels, keyword matches in previews) —
-  it's a heuristic, not an official WhatsApp feature. You'll want to tune
-  the keyword list to your own inbox.
+  *look* promotional (keyword matches in previews) — it's a heuristic, not
+  an official WhatsApp feature. You'll want to tune the keyword list to
+  your own inbox.
 - **WhatsApp Web's page structure isn't public and changes over time.**
   This extension avoids relying on their internal class names and instead
   looks for stable signals (button labels, menu text). If WhatsApp ships a
