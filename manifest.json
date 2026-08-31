@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "WA Ad Guard — one-click archive/unfollow for WhatsApp Web",
+  "version": "1.0.0",
+  "description": "Flags sponsored channels and promotional chats on WhatsApp Web, with one-click Archive or Unfollow. Changes sync to your phone automatically.",
+  "permissions": ["storage"],
+  "host_permissions": ["https://web.whatsapp.com/*"],
+  "content_scripts": [
+    {
+      "matches": ["https://web.whatsapp.com/*"],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
+}

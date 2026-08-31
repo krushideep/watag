@@ -1,0 +1,7 @@
+.DS_Store
+graphify-out/
+node_modules/
+*.log
+demo/.pw-profile/
+demo/.ext-copy/
+demo/recording/

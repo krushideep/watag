@@ -1,0 +1,213 @@
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: #0b141a;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  color: #e9edef;
+}
+
+.app {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+}
+
+.sidebar {
+  width: 420px;
+  min-width: 420px;
+  background: #111b21;
+  border-right: 1px solid #222d34;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-head {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  background: #202c33;
+}
+
+.me-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #6a7fdb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+.head-icons {
+  display: flex;
+  gap: 18px;
+}
+
+.icon-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #8696a0;
+  display: inline-block;
+}
+
+.search-row {
+  padding: 8px 12px;
+  background: #111b21;
+}
+
+.search-input {
+  width: 100%;
+  background: #202c33;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: #d1d7db;
+  font-size: 13.5px;
+}
+
+.chat-list {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.chat-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 16px;
+  border-bottom: 1px solid #1a2329;
+  cursor: pointer;
+  transition: background 0.12s ease;
+}
+
+.chat-row:hover {
+  background: #202c33;
+}
+
+.chat-row.mock-row-leaving {
+  opacity: 0;
+  transform: translateX(-16px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.avatar {
+  width: 46px;
+  height: 46px;
+  min-width: 46px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 15px;
+  color: #fff;
+}
+
+.avatar-square {
+  border-radius: 12px;
+}
+
+.row-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.row-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.row-name {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: #e9edef;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.row-time {
+  font-size: 11.5px;
+  color: #8696a0;
+  white-space: nowrap;
+}
+
+.row-bottom {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.row-preview {
+  font-size: 13px;
+  color: #8696a0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.channel-tag {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #06cf9c;
+  background: rgba(6, 207, 156, 0.12);
+  padding: 1px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.chat-pane {
+  flex: 1;
+  background: #0b141a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chat-pane-empty {
+  text-align: center;
+  color: #8696a0;
+}
+
+.empty-title {
+  font-size: 22px;
+  font-weight: 300;
+  color: #e9edef;
+}
+
+.empty-sub {
+  font-size: 13px;
+  margin-top: 8px;
+}
+
+/* Mock right-click context menu, positioned at the cursor. */
+.mock-menu {
+  position: fixed;
+  z-index: 500;
+  min-width: 200px;
+  background: #233138;
+  border-radius: 6px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
+  padding: 6px 0;
+  font-size: 13.5px;
+}
+
+.mock-menu-item {
+  padding: 9px 16px;
+  color: #d1d7db;
+  cursor: pointer;
+}
+
+.mock-menu-item:hover {
+  background: #182229;
+}

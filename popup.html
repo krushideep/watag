@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>WA Ad Guard</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header class="head">
+      <div class="head-id">
+        <img src="icons/icon48.png" alt="" class="head-icon" />
+        <div>
+          <div class="head-title">WA Ad Guard</div>
+          <div class="head-sub">for web.whatsapp.com</div>
+        </div>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="enabledToggle" />
+        <span class="switch-track"><span class="switch-thumb"></span></span>
+      </label>
+    </header>
+
+    <section class="stats">
+      <div class="stat">
+        <div class="stat-num" id="statArchived">0</div>
+        <div class="stat-label">archived</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" id="statUnfollowed">0</div>
+        <div class="stat-label">unfollowed</div>
+      </div>
+    </section>
+
+    <hr class="rule" />
+
+    <section class="block">
+      <div class="block-title">Flag messages containing</div>
+      <div class="tags" id="keywordTags"></div>
+      <div class="add-row">
+        <input type="text" id="keywordInput" placeholder="add a word or phrase" />
+        <button id="keywordAdd">Add</button>
+      </div>
+      <p class="hint">Sponsored Channels are always flagged — this list only affects regular chats.</p>
+    </section>
+
+    <hr class="rule" />
+
+    <section class="block">
+      <div class="block-title">Never flag</div>
+      <div class="tags" id="whitelistTags"></div>
+      <p class="hint" id="whitelistEmpty">Tap "Not an ad" on any flagged chat to add it here.</p>
+    </section>
+
+    <hr class="rule" />
+
+    <p class="footnote">
+      Archive and Unfollow sync to your phone through your WhatsApp account —
+      changes made here show up there automatically. If WhatsApp changes
+      their page layout, the one-click action may need a manual last step.
+    </p>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

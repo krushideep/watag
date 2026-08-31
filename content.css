@@ -1,0 +1,102 @@
+.wa-ad-guard-badge {
+  position: absolute;
+  right: 8px;
+  bottom: 6px;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 5px;
+  border-radius: 8px;
+  background: #1e292e;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+.wa-ad-guard-label {
+  color: #f2a84e;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 0 4px;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+}
+
+.wa-ad-guard-label svg {
+  display: block;
+}
+
+.wa-ad-guard-btn {
+  border: none;
+  border-radius: 5px;
+  padding: 3px 7px;
+  font-size: 10.5px;
+  font-weight: 600;
+  cursor: pointer;
+  line-height: 1.4;
+}
+
+.wa-ad-guard-btn--archive,
+.wa-ad-guard-btn--dismiss {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+}
+
+.wa-ad-guard-btn--archive svg,
+.wa-ad-guard-btn--dismiss svg {
+  display: block;
+}
+
+.wa-ad-guard-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.wa-ad-guard-btn--archive {
+  background: #2f8f7a;
+  color: #ffffff;
+}
+
+.wa-ad-guard-btn--unfollow {
+  background: #e05a4a;
+  color: #ffffff;
+}
+
+.wa-ad-guard-btn--dismiss {
+  background: transparent;
+  color: #9aa5a8;
+}
+
+.wa-ad-guard-btn--dismiss:hover {
+  color: #d7dcdd;
+}
+
+#wa-ad-guard-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  transform: translateX(-50%);
+  z-index: 9999;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #ffffff;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+  max-width: 360px;
+  text-align: center;
+}
+
+.wa-ad-guard-toast--ok {
+  background: #2f8f7a;
+}
+
+.wa-ad-guard-toast--warn {
+  background: #b8752f;
+}

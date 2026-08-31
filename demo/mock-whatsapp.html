@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>WhatsApp Web (mock)</title>
+<!--
+  Unofficial local mock of WhatsApp Web's chat-list layout, built only to
+  record a demo of the WA Ad Guard extension. Not affiliated with WhatsApp
+  or Meta; not distributed or served publicly.
+-->
+<link rel="stylesheet" href="mock-whatsapp.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <header class="sidebar-head">
+        <div class="me-avatar">K</div>
+        <div class="head-icons">
+          <span class="icon-dot"></span>
+          <span class="icon-dot"></span>
+          <span class="icon-dot"></span>
+        </div>
+      </header>
+      <div class="search-row">
+        <input class="search-input" placeholder="Search or start new chat" disabled />
+      </div>
+
+      <div class="chat-list" id="chatList">
+
+        <div class="chat-row" data-testid="cell-frame-container">
+          <div class="avatar" style="background:#5b8def">M</div>
+          <div class="row-main">
+            <div class="row-top"><span title="Meera" class="row-name">Meera</span><span class="row-time">10:52 AM</span></div>
+            <div class="row-bottom"><span class="row-preview">Sent you the vacation photos 📸</span></div>
+          </div>
+        </div>
+
+        <div class="chat-row" data-testid="cell-frame-container">
+          <div class="avatar avatar-square" style="background:#4a9d7f">TS</div>
+          <div class="row-main">
+            <div class="row-top"><span title="Team Standup" class="row-name">Team Standup</span><span class="row-time">10:40 AM</span></div>
+            <div class="row-bottom"><span class="row-preview">Priya: Meeting moved to 3 PM today</span></div>
+          </div>
+        </div>
+
+        <div class="chat-row" data-testid="cell-frame-container">
+          <div class="avatar" style="background:#c97b3d">R</div>
+          <div class="row-main">
+            <div class="row-top"><span title="Rahul" class="row-name">Rahul</span><span class="row-time">10:15 AM</span></div>
+            <div class="row-bottom"><span class="row-preview">Can you review the PR when you get a chance?</span></div>
+          </div>
+        </div>
+
+        <div class="chat-row" data-testid="cell-frame-container">
+          <div class="avatar avatar-square" style="background:#8a6dd6">SB</div>
+          <div class="row-main">
+            <div class="row-top"><span title="SBI Alerts" class="row-name">SBI Alerts</span><span class="row-time">9:58 AM</span></div>
+            <div class="row-bottom"><span class="row-preview">🎉 FLASH SALE! Get 50% off your annual card fee. Limited time offer, shop now: sbi.co/x92</span></div>
+          </div>
+        </div>
+
+        <div class="chat-row" data-testid="cell-frame-container">
+          <div class="avatar" style="background:#e0607f">❤</div>
+          <div class="row-main">
+            <div class="row-top"><span title="Mom" class="row-name">Mom</span><span class="row-time">9:31 AM</span></div>
+            <div class="row-bottom"><span class="row-preview">Call me when you're free</span></div>
+          </div>
+        </div>
+
+        <div class="chat-row is-channel" data-testid="cell-frame-container">
+          <div class="avatar avatar-square" style="background:#2c7de0">FK</div>
+          <div class="row-main">
+            <div class="row-top"><span title="Flipkart Big Billion Days" class="row-name">Flipkart Big Billion Days</span><span class="row-time">9:02 AM</span></div>
+            <div class="row-bottom"><span class="channel-tag">Sponsored</span><span class="row-preview">Up to 80% off electronics — today only!</span></div>
+          </div>
+        </div>
+
+        <div class="chat-row" data-testid="cell-frame-container">
+          <div class="avatar" style="background:#3d9c8f">A</div>
+          <div class="row-main">
+            <div class="row-top"><span title="Alex" class="row-name">Alex</span><span class="row-time">8:47 AM</span></div>
+            <div class="row-bottom"><span class="row-preview">📷 Photo</span></div>
+          </div>
+        </div>
+
+        <div class="chat-row" data-testid="cell-frame-container">
+          <div class="avatar avatar-square" style="background:#d69e2e">MD</div>
+          <div class="row-main">
+            <div class="row-top"><span title="MyntraDeals" class="row-name">MyntraDeals</span><span class="row-time">8:20 AM</span></div>
+            <div class="row-bottom"><span class="row-preview">Exclusive coupon inside: use code SAVE30 for extra discount. Free shipping on all orders today!</span></div>
+          </div>
+        </div>
+
+        <div class="chat-row is-channel" data-testid="cell-frame-container">
+          <div class="avatar avatar-square" style="background:#d4463a">ZO</div>
+          <div class="row-main">
+            <div class="row-top"><span title="Zomato Offers" class="row-name">Zomato Offers</span><span class="row-time">7:55 AM</span></div>
+            <div class="row-bottom"><span class="channel-tag">Sponsored</span><span class="row-preview">Get flat 60% cashback on your first 3 orders</span></div>
+          </div>
+        </div>
+
+        <div class="chat-row" data-testid="cell-frame-container">
+          <div class="avatar avatar-square" style="background:#6a7fdb">CF</div>
+          <div class="row-main">
+            <div class="row-top"><span title="College Friends 🎓" class="row-name">College Friends 🎓</span><span class="row-time">7:40 AM</span></div>
+            <div class="row-bottom"><span class="row-preview">Vote for the trip destination in the poll</span></div>
+          </div>
+        </div>
+
+        <div class="chat-row" data-testid="cell-frame-container">
+          <div class="avatar" style="background:#3d8b6e">DS</div>
+          <div class="row-main">
+            <div class="row-top"><span title="Dr. Sharma Clinic" class="row-name">Dr. Sharma Clinic</span><span class="row-time">Yesterday</span></div>
+            <div class="row-bottom"><span class="row-preview">Your appointment is confirmed for Friday, 4 PM</span></div>
+          </div>
+        </div>
+
+        <div class="chat-row" data-testid="cell-frame-container">
+          <div class="avatar" style="background:#b06fd6">P</div>
+          <div class="row-main">
+            <div class="row-top"><span title="Priya" class="row-name">Priya</span><span class="row-time">Yesterday</span></div>
+            <div class="row-bottom"><span class="row-preview">Haha that's hilarious 😂</span></div>
+          </div>
+        </div>
+
+      </div>
+    </aside>
+
+    <main class="chat-pane">
+      <div class="chat-pane-empty">
+        <div class="empty-title">Mock WhatsApp Web</div>
+        <div class="empty-sub">for demoing WA Ad Guard — select a chat</div>
+      </div>
+    </main>
+  </div>
+
+  <div id="menuLayer"></div>
+
+  <script src="mock-whatsapp.js"></script>
+</body>
+</html>

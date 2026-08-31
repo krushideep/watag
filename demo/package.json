@@ -1,0 +1,13 @@
+{
+  "name": "wa-ad-guard-demo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Records a demo of WA Ad Guard against a mock WhatsApp Web page.",
+  "scripts": {
+    "record": "node record.mjs"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "playwright": "^1.62.1"
+  }
+}
