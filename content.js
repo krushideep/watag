@@ -23,11 +23,18 @@
 
   const STATE = {
     enabled: true,
-    keywords: [],
+    categories: [],
     whitelist: [],
     processed: new WeakSet(),
     settingsLoaded: false,
   };
+
+  function normalizeCategories(categories) {
+    return (categories || []).map((cat) => ({
+      ...cat,
+      keywords: (cat.keywords || []).map((k) => k.toLowerCase()),
+    }));
+  }
 
   function sleep(ms) {
     return new Promise((r) => setTimeout(r, ms));
@@ -44,19 +51,19 @@
   }
 
   function loadSettings() {
-    chrome.storage.local.get(["enabled", "keywords", "whitelist"], (data) => {
+    chrome.storage.local.get(["enabled", "categories", "whitelist"], (data) => {
       STATE.enabled = data.enabled !== false;
-      STATE.keywords = (data.keywords || []).map((k) => k.toLowerCase());
+      STATE.categories = normalizeCategories(data.categories);
       STATE.whitelist = data.whitelist || [];
       STATE.settingsLoaded = true;
-      console.log("[WATag] settings loaded — enabled:", STATE.enabled, "keywords:", STATE.keywords);
+      console.log("[WATag] settings loaded — enabled:", STATE.enabled, "categories:", STATE.categories);
       rescan();
     });
   }
 
   chrome.storage.onChanged.addListener((changes) => {
     if (changes.enabled) STATE.enabled = changes.enabled.newValue !== false;
-    if (changes.keywords) STATE.keywords = (changes.keywords.newValue || []).map((k) => k.toLowerCase());
+    if (changes.categories) STATE.categories = normalizeCategories(changes.categories.newValue);
     if (changes.whitelist) STATE.whitelist = changes.whitelist.newValue || [];
     // Settings changed the classification rules — re-evaluate every row.
     STATE.processed = new WeakSet();
@@ -80,9 +87,10 @@
   function classify(row) {
     const text = row.innerText || "";
     const lower = text.toLowerCase();
-    const hit = STATE.keywords.find((kw) => kw && lower.includes(kw));
-    if (hit) return { flagged: true, reason: hit };
-
+    for (const category of STATE.categories) {
+      const hit = (category.keywords || []).find((kw) => kw && lower.includes(kw));
+      if (hit) return { flagged: true, reason: hit, category };
+    }
     return { flagged: false };
   }
 
@@ -197,7 +205,13 @@
     const key = getRowKey(row);
     const badge = document.createElement("div");
     badge.className = "watag-badge";
-    badge.title = `Flagged: ${info.reason}`;
+    badge.title = `${info.category.name}: matched "${info.reason}"`;
+
+    const label = document.createElement("span");
+    label.className = "watag-badge-label";
+    label.textContent = info.category.name;
+    label.style.background = info.category.color || "#2f8f7a";
+    badge.appendChild(label);
 
     const archiveBtn = document.createElement("button");
     archiveBtn.innerHTML = ICONS.archive;

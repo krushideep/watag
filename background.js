@@ -1,22 +1,46 @@
+const DEFAULT_CATEGORIES = [
+  {
+    id: "ads",
+    name: "Ads",
+    color: "#2f8f7a",
+    keywords: [
+      "% off", "sale", "discount", "offer", "buy now", "shop now",
+      "limited time", "flash sale", "deal", "promo code", "free shipping",
+      "order now", "click here", "cashback", "coupon", "clearance"
+    ]
+  }
+];
+
 const DEFAULTS = {
   enabled: true,
-  keywords: [
-    "% off", "sale", "discount", "offer", "buy now", "shop now",
-    "limited time", "flash sale", "deal", "promo code", "free shipping",
-    "order now", "click here", "cashback", "coupon", "clearance"
-  ],
+  categories: DEFAULT_CATEGORIES,
   whitelist: [],
   stats: { archived: 0 }
 };
 
 chrome.runtime.onInstalled.addListener(async () => {
-  const existing = await chrome.storage.local.get(Object.keys(DEFAULTS));
+  const existing = await chrome.storage.local.get(["enabled", "categories", "keywords", "whitelist", "stats"]);
   const toSet = {};
-  for (const key of Object.keys(DEFAULTS)) {
-    if (existing[key] === undefined) toSet[key] = DEFAULTS[key];
+
+  if (existing.enabled === undefined) toSet.enabled = DEFAULTS.enabled;
+  if (existing.whitelist === undefined) toSet.whitelist = DEFAULTS.whitelist;
+  if (existing.stats === undefined) toSet.stats = DEFAULTS.stats;
+
+  if (existing.categories === undefined) {
+    if (Array.isArray(existing.keywords) && existing.keywords.length) {
+      // Pre-categories installs stored a flat "keywords" list — fold it
+      // into a single "Ads" category instead of losing it.
+      toSet.categories = [{ id: "ads", name: "Ads", color: "#2f8f7a", keywords: existing.keywords }];
+    } else {
+      toSet.categories = DEFAULT_CATEGORIES;
+    }
   }
+
   if (Object.keys(toSet).length) {
     await chrome.storage.local.set(toSet);
+  }
+  if (existing.keywords !== undefined) {
+    await chrome.storage.local.remove("keywords");
   }
 });
 

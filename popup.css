@@ -189,6 +189,100 @@ body {
   background: #34444a;
 }
 
+.categories {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.category-card {
+  background: #1e292e;
+  border: 1px solid #2a373c;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.category-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.category-color {
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: none;
+  border-radius: 5px;
+  background: none;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.category-color::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.category-color::-webkit-color-swatch {
+  border: none;
+  border-radius: 5px;
+}
+
+.category-name {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  color: #eef2f2;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 5px 6px;
+}
+
+.category-name:hover,
+.category-name:focus {
+  border-color: #2a373c;
+  outline: none;
+}
+
+.category-remove {
+  background: none;
+  border: none;
+  color: #7d8a8d;
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 1;
+  padding: 4px;
+  flex-shrink: 0;
+}
+
+.category-remove:hover {
+  color: #e05a4a;
+}
+
+.category-card .tags {
+  margin-top: 8px;
+}
+
+.add-category-btn {
+  width: 100%;
+  margin-top: 10px;
+  background: #1e292e;
+  border: 1px dashed #2a373c;
+  border-radius: 6px;
+  color: #b7c0c2;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.add-category-btn:hover {
+  background: #232f34;
+  color: #eef2f2;
+}
+
 .hint {
   font-size: 10.5px;
   color: #6a7679;
