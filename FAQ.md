@@ -8,11 +8,8 @@
 ### Q: Does WATag work on mobile?
 **A:** Not directly. WATag only works on **WhatsApp Web** (desktop). However, any chats you archive here will sync to your iPhone or Android automatically since it's the same account.
 
-### Q: Why can't I find it in the Chrome Web Store?
-**A:** WATag is a side-loaded extension for personal use. It's not published to the store because:
-- WhatsApp's page structure isn't public and changes frequently
-- We can't guarantee it'll work after every WhatsApp Web update
-- This gives us full control over updates (just pull the latest code and reload)
+### Q: Is it on the Chrome Web Store?
+**A:** It's being submitted for listing. Until it's live, you can still install it unpacked/side-loaded (see below) — that also means the update model differs: a Web Store install auto-updates, while a side-loaded one requires pulling the latest code and reloading the extension yourself.
 
 ### Q: I tried to load it but got an error. Help?
 **A:**
