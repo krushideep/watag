@@ -62,7 +62,7 @@ You'll see small badges appear under flagged chats with icon buttons for **Archi
 - **WhatsApp doesn't run ads in normal chats.** This tool flags things that *look* promotional (keyword matches in previews) — it's a heuristic, not an official WhatsApp feature. You'll want to tune your categories' keywords to your own inbox.
 - **WhatsApp Web's page structure isn't public and changes over time.** This extension avoids relying on their internal class names and instead looks for stable signals (button labels, menu text). If WhatsApp ships a redesign, one-click actions may only get partway (it'll open the right menu for you and ask you to finish with one manual click) until the extension is updated.
 - **This only runs while web.whatsapp.com is open in your browser** — it can't scan or act on chats in the background.
-- This is for personal use, unpacked/side-loaded — it isn't published to the Chrome Web Store, so there's no auto-update. Pull the latest files and reload the extension to update.
+- Until it's live on the Chrome Web Store, you can still install it unpacked/side-loaded — see [Install](#install-takes-1-minute) below. A side-loaded install has no auto-update; pull the latest files and reload the extension to update.
 
 ## Troubleshooting
 
