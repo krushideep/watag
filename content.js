@@ -123,7 +123,8 @@
   }
 
   function findMenuItemByText(menu, textFragments) {
-    const items = Array.from(menu.querySelectorAll('li, div[role="button"], [role="menuitem"]'));
+    const root = menu || document;
+    const items = Array.from(root.querySelectorAll('li, div[role="button"], [role="menuitem"]'));
     return items.find((el) => {
       const t = (el.innerText || "").trim().toLowerCase();
       return textFragments.some((frag) => t.includes(frag));

@@ -17,7 +17,9 @@ const repoRoot = path.resolve(__dirname, "..");
 const scratchExtDir = path.resolve(__dirname, ".ext-copy");
 const userDataDir = path.resolve(__dirname, ".pw-profile");
 const outDir = path.resolve(__dirname, "recording");
-const size = { width: 1280, height: 800 };
+// Matches the mock's fixed 420px sidebar exactly, so the frame is just the
+// chat list — none of the empty "select a chat" pane to its right.
+const size = { width: 420, height: 800 };
 const PORT = 8743;
 const demoOrigin = `http://127.0.0.1:${PORT}`;
 
@@ -119,6 +121,22 @@ async function centerOf(locator) {
   return { x: box.x + box.width / 2, y: box.y + box.height / 2 };
 }
 
+function hoverRow(page, cursor, name) {
+  return (async () => {
+    const row = page.locator(`.chat-row:has(span[title="${name}"])`);
+    await row.scrollIntoViewIfNeeded();
+    const { x, y } = await centerOf(row);
+    await cursor.moveTo(x, y);
+    return row;
+  })();
+}
+
+async function clickButton(cursor, row, selector) {
+  const btn = row.locator(selector);
+  const { x, y } = await centerOf(btn);
+  await cursor.click(x, y);
+}
+
 const context = await chromium.launchPersistentContext(userDataDir, {
   headless: false,
   viewport: size,
@@ -144,59 +162,73 @@ if (badgeCount === 0) throw new Error("No rows were flagged — extension did no
 
 await pause(page, 700);
 
-async function hoverRow(name) {
-  const row = page.locator(`.chat-row:has(span[title="${name}"])`);
-  await row.scrollIntoViewIfNeeded();
-  const { x, y } = await centerOf(row);
-  await cursor.moveTo(x, y);
-  return row;
-}
-
-async function clickButton(row, selector) {
-  const btn = row.locator(selector);
-  const { x, y } = await centerOf(btn);
-  await cursor.click(x, y);
-}
-
 // 1. Hover a flagged promotional chat, then Archive it.
-let row = await hoverRow("SBI Alerts");
+let row = await hoverRow(page, cursor, "SBI Alerts");
 await pause(page, 900);
-await clickButton(row, ".watag-btn--archive");
+await clickButton(cursor, row, ".watag-btn--archive");
 await pause(page, 2000); // toast + row fade-out
 
 // 2. Hover another flagged promotional chat, then Archive it too.
-row = await hoverRow("Zomato Offers");
+row = await hoverRow(page, cursor, "Zomato Offers");
 await pause(page, 800);
-await clickButton(row, ".watag-btn--archive");
+await clickButton(cursor, row, ".watag-btn--archive");
 await pause(page, 2000);
 
 // 3. Hover another flagged chat and dismiss it as "Not an ad" (whitelist flow).
-row = await hoverRow("MyntraDeals");
+row = await hoverRow(page, cursor, "MyntraDeals");
 await pause(page, 800);
-await clickButton(row, ".watag-btn--dismiss");
+await clickButton(cursor, row, ".watag-btn--dismiss");
 await pause(page, 1200);
 
 await pause(page, 800);
 await page.close();
 
-// 4. Separate short clip: open the popup UI directly and add a keyword live.
+// 4. Separate short clip: open the popup UI directly and create a category live.
 const popupPage = await context.newPage();
-await popupPage.setViewportSize({ width: 340, height: 520 });
+await popupPage.setViewportSize({ width: 340, height: 560 });
 await popupPage.goto(`chrome-extension://${extensionId}/popup.html`);
 const popupCursor = await attachCursor(popupPage);
 await pause(popupPage, 1000);
 
-const keywordInput = popupPage.locator("#keywordInput");
-const inputPos = await centerOf(keywordInput);
-await popupCursor.moveTo(inputPos.x, inputPos.y);
-await keywordInput.click();
-await keywordInput.fill("subscribe now");
+const addCategoryBtn = popupPage.locator("#addCategoryBtn");
+const addCategoryPos = await centerOf(addCategoryBtn);
+await popupCursor.moveTo(addCategoryPos.x, addCategoryPos.y);
+await popupCursor.click(addCategoryPos.x, addCategoryPos.y);
+await pause(popupPage, 500);
+
+const newCard = popupPage.locator(".category-card").last();
+const nameInput = newCard.locator(".category-name");
+const namePos = await centerOf(nameInput);
+await popupCursor.moveTo(namePos.x, namePos.y);
+await nameInput.click();
+await nameInput.fill("Spam");
+await nameInput.dispatchEvent("change");
 await pause(popupPage, 400);
 
-const addBtnPos = await centerOf(popupPage.locator("#keywordAdd"));
-await popupCursor.click(addBtnPos.x, addBtnPos.y);
+const kwInput = newCard.locator(".add-row input");
+const kwPos = await centerOf(kwInput);
+await popupCursor.moveTo(kwPos.x, kwPos.y);
+await kwInput.click();
+await kwInput.fill("subscribe now");
+await pause(popupPage, 300);
+
+const kwAddBtn = newCard.locator(".add-row button");
+const kwAddPos = await centerOf(kwAddBtn);
+await popupCursor.click(kwAddPos.x, kwAddPos.y);
 await pause(popupPage, 1400);
 await popupPage.close();
+
+// 5. Third clip: reopen the chat list — "Weekly Digest" (which matches the
+// new "Spam" category's keyword) now carries that category's own badge
+// color alongside the default "Ads" badges on the other flagged chats.
+const revealPage = await context.newPage();
+await revealPage.goto(`${demoOrigin}/mock-whatsapp.html`);
+const revealCursor = await attachCursor(revealPage);
+await pause(revealPage, 1500); // initial scan + badge injection settle
+
+await hoverRow(revealPage, revealCursor, "Weekly Digest");
+await pause(revealPage, 1600);
+await revealPage.close();
 
 await context.close();
 server.close();

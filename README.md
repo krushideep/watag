@@ -19,13 +19,13 @@ A browser extension for **web.whatsapp.com** (Chrome, Edge, or Brave) that flags
 
 ## Features
 
-✨ **Smart Detection** — Flags chats containing promotional keywords (configurable)
+✨ **Smart Detection** — Flags chats matching keywords from any of your categories
+
+🏷️ **Custom Categories** — Group keywords into your own categories, each with its own name and badge color
 
 ⚡ **One-Click Archive** — Archive promotional chats without opening them
 
 🎯 **False Positive Handling** — Mark chats as "Not an ad" and they'll never be flagged again
-
-⚙️ **Customizable Keywords** — Add or remove keywords from the extension popup
 
 📊 **Archive Counter** — Track how many chats you've archived
 
@@ -33,7 +33,7 @@ A browser extension for **web.whatsapp.com** (Chrome, Edge, or Brave) that flags
 
 ## Demo
 
-![Demo: flagging and archiving promotional chats, and dismissing a false positive](demo/demo.gif)
+![Demo: flagging and archiving promotional chats, dismissing a false positive, and tagging a chat with a custom category](demo/demo.gif)
 
 Recorded against a local mock chat list with realistic sample data (see [`demo/`](demo)) — the extension itself is unmodified and driving the interactions for real, not staged.
 
@@ -51,14 +51,15 @@ You'll see small badges appear under flagged chats with icon buttons for **Archi
 
 - **Click the extension icon** in your toolbar to:
   - Turn detection on/off
-  - Add or remove keywords
+  - Create categories — each with its own name, badge color, and keyword list
   - See how many chats you've archived
   - Manage your "never flag" list (built automatically when you tap "Not an ad" on a chat)
+- **Click the badge's category label** to see which category and keyword matched.
 - **Click Archive** directly on a flagged chat to act on it immediately — no need to open the chat first.
 
 ## Please read: honest limitations
 
-- **WhatsApp doesn't run ads in normal chats.** This tool flags things that *look* promotional (keyword matches in previews) — it's a heuristic, not an official WhatsApp feature. You'll want to tune the keyword list to your own inbox.
+- **WhatsApp doesn't run ads in normal chats.** This tool flags things that *look* promotional (keyword matches in previews) — it's a heuristic, not an official WhatsApp feature. You'll want to tune your categories' keywords to your own inbox.
 - **WhatsApp Web's page structure isn't public and changes over time.** This extension avoids relying on their internal class names and instead looks for stable signals (button labels, menu text). If WhatsApp ships a redesign, one-click actions may only get partway (it'll open the right menu for you and ask you to finish with one manual click) until the extension is updated.
 - **This only runs while web.whatsapp.com is open in your browser** — it can't scan or act on chats in the background.
 - This is for personal use, unpacked/side-loaded — it isn't published to the Chrome Web Store, so there's no auto-update. Pull the latest files and reload the extension to update.
@@ -71,7 +72,7 @@ You'll see small badges appear under flagged chats with icon buttons for **Archi
 
 **Keywords not matching?**
 - Keywords are case-insensitive but must be exact word matches (not partial matches within words)
-- Check the popup to verify your keyword list
+- Check the popup to verify the keyword list for the right category
 
 **Archive button not appearing?**
 - Make sure you're on `web.whatsapp.com` (not WhatsApp Web Mirror or a clone)
