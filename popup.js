@@ -5,7 +5,13 @@ const whitelistTags = document.getElementById("whitelistTags");
 const whitelistEmpty = document.getElementById("whitelistEmpty");
 const statArchived = document.getElementById("statArchived");
 
-const COLOR_PALETTE = ["#2f8f7a", "#c0564f", "#4f7fc0", "#c0964f", "#8a5fc0", "#5fa8c0"];
+const COLOR_PALETTE = [
+  "#2f8f7a", "#c0564f", "#4f7fc0", "#c0964f", "#8a5fc0",
+  "#5fa8c0", "#5fa85f", "#c0507f", "#c0a24f", "#6f7580",
+];
+
+let lastCategories = [];
+let openColorPickerId = null;
 
 function renderTags(container, items, onRemove) {
   container.innerHTML = "";
@@ -49,6 +55,7 @@ function addCategory() {
 }
 
 function renderCategories(categories) {
+  lastCategories = categories;
   categoriesList.innerHTML = "";
   categories.forEach((cat) => {
     const card = document.createElement("div");
@@ -57,13 +64,18 @@ function renderCategories(categories) {
     const header = document.createElement("div");
     header.className = "category-header";
 
-    const colorInput = document.createElement("input");
-    colorInput.type = "color";
-    colorInput.className = "category-color";
-    colorInput.value = cat.color || "#2f8f7a";
-    colorInput.title = "Badge color";
-    colorInput.addEventListener("input", () => updateCategory(cat.id, { color: colorInput.value }));
-    header.appendChild(colorInput);
+    const colorSwatch = document.createElement("button");
+    colorSwatch.type = "button";
+    colorSwatch.className = "category-color";
+    colorSwatch.style.background = cat.color || COLOR_PALETTE[0];
+    colorSwatch.title = "Badge color";
+    colorSwatch.setAttribute("aria-label", "Badge color");
+    colorSwatch.addEventListener("click", (e) => {
+      e.stopPropagation();
+      openColorPickerId = openColorPickerId === cat.id ? null : cat.id;
+      renderCategories(lastCategories);
+    });
+    header.appendChild(colorSwatch);
 
     const nameInput = document.createElement("input");
     nameInput.type = "text";
@@ -82,6 +94,26 @@ function renderCategories(categories) {
     header.appendChild(removeCatBtn);
 
     card.appendChild(header);
+
+    if (openColorPickerId === cat.id) {
+      const grid = document.createElement("div");
+      grid.className = "color-grid";
+      COLOR_PALETTE.forEach((color) => {
+        const swatch = document.createElement("button");
+        swatch.type = "button";
+        swatch.className = "color-grid-swatch";
+        swatch.style.background = color;
+        if (color === cat.color) swatch.classList.add("is-selected");
+        swatch.setAttribute("aria-label", `Set color ${color}`);
+        swatch.addEventListener("click", (e) => {
+          e.stopPropagation();
+          openColorPickerId = null;
+          updateCategory(cat.id, { color });
+        });
+        grid.appendChild(swatch);
+      });
+      card.appendChild(grid);
+    }
 
     const tags = document.createElement("div");
     tags.className = "tags";
@@ -145,6 +177,13 @@ enabledToggle.addEventListener("change", () => {
 });
 
 addCategoryBtn.addEventListener("click", addCategory);
+
+document.addEventListener("click", () => {
+  if (openColorPickerId !== null) {
+    openColorPickerId = null;
+    renderCategories(lastCategories);
+  }
+});
 
 chrome.storage.onChanged.addListener(refresh);
 refresh();
