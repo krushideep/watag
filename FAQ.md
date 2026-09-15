@@ -31,10 +31,13 @@ If still stuck, [open an issue](../../issues/new) with your browser version and 
 ## Using WATag
 
 ### Q: What keywords are included by default?
-**A:** "sale", "% off", "discount", "buy now", "offer", "limited time", "free shipping" — but you can customize this list completely in the popup.
+**A:** A single "Ads" category with words like "sale", "% off", "discount", "buy now", "offer", "limited time", "free shipping" — but you can edit, remove, or add as many categories and keywords as you want in the popup.
 
 ### Q: Can I add my own keywords?
-**A:** Yes! Click the WATag icon in your toolbar → add or remove keywords from the list. Changes take effect immediately.
+**A:** Yes! Click the WATag icon in your toolbar → add or remove keywords from any category. Changes take effect immediately.
+
+### Q: What are categories, and how are they different from keywords?
+**A:** A category is a named group of keywords with its own badge color (e.g. "Ads", "Spam", "Work"). When a chat matches a keyword, it's flagged with that keyword's category — the badge shows the category name in its color. Click **+ Add category** in the popup to create more, and use the color swatch on each category to pick its badge color.
 
 ### Q: How do I archive a chat?
 **A:** Click the **Archive** button that appears under any flagged chat. It'll disappear from your chat list on web.whatsapp.com AND automatically sync to your phone.
@@ -66,7 +69,7 @@ If still stuck, [open an issue](../../issues/new) with your browser version and 
 **A:** Check:
 1. Is the extension **enabled**? (Eye icon should be visible on Extensions page)
 2. Is detection **turned on**? (Click WATag icon → toggle "Detection on/off")
-3. Do your chats contain keywords from your list? (Even "sale" in a name counts)
+3. Do your chats contain keywords from any of your categories? (Even "sale" in a name counts)
 4. Refresh the page (F5)
 
 ### Q: The Archive button doesn't work
