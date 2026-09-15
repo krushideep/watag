@@ -43,8 +43,7 @@ https://github.com/krushideep/watag/blob/main/PRIVACY.md
 
 ## Assets
 - Store icon: `icons/icon128.png` (128×128) — already meets requirements.
-- Screenshots (1280×800, no alpha): `store/screenshot-1-flagging.png`, `store/screenshot-2-categories.png`
-- Small promo tile (440×280): `store/promo-tile-440x280.png`
+- Screenshots (1280×800, no alpha) and small promo tile (440×280): run `make store-assets` to (re)generate `store/screenshot-1-flagging.png`, `store/screenshot-2-categories.png`, and `store/promo-tile-440x280.png` from `demo/demo.gif` + `icons/icon128.png`. These PNGs are build artifacts (gitignored) — regenerate whenever `demo.gif` changes.
 - Package to upload: `dist/watag.zip` (run `make build` to regenerate)
 
 ## Pre-submit checklist
