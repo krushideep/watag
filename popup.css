@@ -212,20 +212,35 @@ body {
   width: 22px;
   height: 22px;
   padding: 0;
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 5px;
-  background: none;
   cursor: pointer;
   flex-shrink: 0;
 }
 
-.category-color::-webkit-color-swatch-wrapper {
-  padding: 0;
+.color-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 22px);
+  gap: 6px;
+  margin-top: 8px;
+  padding: 8px;
+  background: #161f23;
+  border: 1px solid #2a373c;
+  border-radius: 6px;
 }
 
-.category-color::-webkit-color-swatch {
-  border: none;
+.color-grid-swatch {
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 5px;
+  cursor: pointer;
+}
+
+.color-grid-swatch.is-selected {
+  outline: 2px solid #eef2f2;
+  outline-offset: 1px;
 }
 
 .category-name {
